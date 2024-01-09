@@ -14,6 +14,10 @@
             <div class="track-grid">
                 <div v-for="track in tracks" :key="track.uuid" class="track-card">
                     <img :src="'/storage/' + track.image" alt="" class="track-image">
+                    <audio controls>
+                        <source :src="'/storage/' + track.music" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
                     <div class="track-info">
                         <h2 class="track-title">{{ track.title }}</h2>
                         <p class="track-artist">by {{ track.artist }}</p>
@@ -49,13 +53,12 @@
 
     .track-card {
     margin: 1rem;
-    width: calc((100% / 3) - 2rem); /* Adjusted width */
-    height: 32rem; /* Adjusted height */
+    width: calc((100% / 3) - 2rem);
     background-color: #f3f4f6;
     border-radius: 0.375rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
     overflow: hidden;
-    position: relative; /* Added to position the play count */
+    position: relative;
     }
 
     .track-image {

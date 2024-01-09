@@ -12,7 +12,7 @@ class TrackController extends Controller
 {
     public function index()
     {
-        $tracks = Track::orderByDesc('id')->get();
+        $tracks = Track::where('display', true)->orderByDesc('id')->get();
 
         return Inertia::render('Track/Index', [
             'tracks' => $tracks,
@@ -47,7 +47,7 @@ class TrackController extends Controller
         $request->music->storeAs('tracks/musics', $uuid . '.' . $musicExtension);
 
         Track::create([
-            'uuid' => 'trk-' . $uuid,
+            'uuid' => $uuid,
             'title' => $request->title,
             'artist' => $request->artist,
             'display' => $request->display,
