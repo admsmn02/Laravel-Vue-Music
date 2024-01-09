@@ -17,12 +17,8 @@
             >
             {{ search }}
             <div class="track-grid">
-                <div v-for="track in filteredTracks" :key="track.uuid" class="track-card">
+                <div v-for="track in filteredTracks" :key="track.uuid" class="track-card" @click="play(track)">
                     <img :src="'/storage/' + track.image" alt="" class="track-image">
-                    <audio controls>
-                        <source :src="'/storage/' + track.music" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
                     <div class="track-info">
                         <h2 class="track-title">{{ track.title }}</h2>
                         <p class="track-artist">by {{ track.artist }}</p>
@@ -48,14 +44,34 @@
         props: ['tracks'],
         data() {
             return {
-                search: ''
+                search: '',
+                audio: null,
+                currentTrack: null,
             }
         },
         computed: {
             filteredTracks(){
                 return this.tracks.filter((track) => {
-                    return track.title.toLowerCase().includes(this.search.toLowerCase())
+                    return track.title.toLowerCase().includes(this.search.toLowerCase()) || track.artist.toLowerCase().includes(this.search.toLowerCase())
                 })
+            }
+        },
+        methods: {
+            play(track){
+                const url = '/storage/' + track.music;
+
+                if(!this.currentTrack){
+                    this.audio = new Audio(url);
+                    this.audio.play();
+                } else if (this.currentTrack !== track.uuid){
+                    this.audio.pause();
+                    this.audio.src = url;
+                    this.audio.play();
+                } else {
+                    this.audio.paused ? this.audio.play() : this.audio.pause();
+                }
+
+                this.currentTrack = track.uuid;
             }
         }
    }
