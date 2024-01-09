@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Track;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
+
 
 class TrackController extends Controller
 {
@@ -20,5 +22,27 @@ class TrackController extends Controller
     public function create()
     {
         return Inertia::render('Track/Create');
+    }
+
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => ['string', 'required'],
+            'artist' => ['string', 'required'],
+            'image' => ['file', 'required'],
+            'music' => ['file', 'required'],
+            'display' => ['boolean', 'required'],
+        ]);
+
+        $request->merge([
+            'uuid' => Uuid::uuid4(),
+        ]);
+
+        Track::create($request->all());
+
+
+        return redirect()->route('tracks.index');
     }
 }

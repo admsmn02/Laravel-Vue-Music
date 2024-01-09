@@ -8,6 +8,7 @@ use App\Http\Controllers\TrackController;
 
 Route::get('/', [TrackController::class, 'index'])->name('tracks.index');
 Route::get('/tracks/create', [TrackController::class, 'create'])->name('tracks.create');
+Route::post('/tracks', [TrackController::class, 'store'])->name('tracks.store');
 
 Route::middleware([
     'auth:sanctum',

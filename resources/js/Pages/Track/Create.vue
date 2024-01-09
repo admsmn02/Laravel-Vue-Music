@@ -7,8 +7,7 @@
             
         </template>
         <template #content>
-            <form>
-                    <!-- Title input -->
+            <form @submit.prevent="submit">
                 <div class="mb-3">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                         Titre
@@ -51,6 +50,7 @@
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-red-500"
                         :class="{ 'border-red-500': form.errors.image }"
                         type="file"
+                        accept="image/*"
                     >
                     <p class="text-red-500 text-xs italic">{{ form.errors.image }}</p>  
                 </div>
@@ -66,6 +66,7 @@
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-red-500"
                         :class="{ 'border-red-500': form.errors.music }"
                         type="file"
+                        accept="audio/*"
                     >
                         <p class="text-red-500 text-xs italic">{{ form.errors.music }}</p>
                 </div>
@@ -86,7 +87,8 @@
                     </select>
                     <p class="text-red-500 text-xs italic">{{ form.errors.display }}</p> 
                 </div>
-                
+
+                <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
             </form>
 
             {{ form }}
@@ -97,23 +99,28 @@
 <script>
    import MusicLayout from '@/Layouts/MusicLayout.vue'
    export default {
-        components: { MusicLayout },
-        data() {
-            return {
-                form: this.$inertia.form({
-                    title: '',
-                    artist: '',
-                    image: null,
-                    music: null,
-                    display: true,
-                })
-            }
-        },
-        methods: {
-            handleInputChange(event, fieldName) {
-              this.form[fieldName] = event.target.files[0];
-          }
-        }
+       components: { MusicLayout },
+       data() {
+           return {
+               form: this.$inertia.form({
+                  title: '',
+                  artist: '',
+                  image: null,
+                  music: null,
+                  display: true,
+               })
+           }
+       },
+       methods: {
+           handleInputChange(event, fieldName) {
+               this.form[fieldName] = event.target.files[0];
+           },
+           submit() {
+                this.form.post(route('tracks.store'), {
+                     onSuccess: () => this.$inertia.visit(route('track.index')),
+                });
+           }
+       }
    }
 </script>
    
