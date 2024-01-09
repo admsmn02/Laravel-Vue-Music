@@ -13,7 +13,7 @@
         <template #content>
             <div class="track-grid">
                 <div v-for="track in tracks" :key="track.uuid" class="track-card">
-                    <img :src="track.image" alt="" class="track-image">
+                    <img :src="'/storage/' + track.image" alt="" class="track-image">
                     <div class="track-info">
                         <h2 class="track-title">{{ track.title }}</h2>
                         <p class="track-artist">by {{ track.artist }}</p>

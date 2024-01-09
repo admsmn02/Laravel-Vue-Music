@@ -12,7 +12,7 @@ class TrackController extends Controller
 {
     public function index()
     {
-        $tracks = Track::all();
+        $tracks = Track::orderByDesc('id')->get();
 
         return Inertia::render('Track/Index', [
             'tracks' => $tracks,
@@ -29,19 +29,31 @@ class TrackController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['string', 'required'],
-            'artist' => ['string', 'required'],
-            'image' => ['file', 'required'],
-            'music' => ['file', 'required'],
+            'title' => ['string', 'required', 'max:255'],
+            'artist' => ['string', 'required', 'max:255'],
+            'image' => ['image', 'required'],
+            'music' => ['file', 'required', 'extensions:mp3,wav,ogg'],
             'display' => ['boolean', 'required'],
         ]);
 
-        $request->merge([
-            'uuid' => Uuid::uuid4(),
+        $uuid = 'trk-' . Uuid::uuid4();
+
+        $imageExtension = $request->image->extension();
+        $imagePath = $request->image->storeAs('tracks/images', $uuid . '.' . $imageExtension);
+        $request->image->storeAs('tracks/images', $uuid . '.' . $imageExtension);
+
+        $musicExtension = $request->music->extension();
+        $musicPath = $request->music->storeAs('tracks/musics', $uuid . '.' . $musicExtension);
+        $request->music->storeAs('tracks/musics', $uuid . '.' . $musicExtension);
+
+        Track::create([
+            'uuid' => 'trk-' . $uuid,
+            'title' => $request->title,
+            'artist' => $request->artist,
+            'display' => $request->display,
+            'image' => $imagePath,
+            'music' => $musicPath,
         ]);
-
-        Track::create($request->all());
-
 
         return redirect()->route('tracks.index');
     }
