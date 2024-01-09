@@ -11,8 +11,13 @@
         </template>
 
         <template #content>
+            <input
+                type="search"
+                v-model="search"
+            >
+            {{ search }}
             <div class="track-grid">
-                <div v-for="track in tracks" :key="track.uuid" class="track-card">
+                <div v-for="track in filteredTracks" :key="track.uuid" class="track-card">
                     <img :src="'/storage/' + track.image" alt="" class="track-image">
                     <audio controls>
                         <source :src="'/storage/' + track.music" type="audio/mpeg">
@@ -41,6 +46,18 @@
             Link
         },
         props: ['tracks'],
+        data() {
+            return {
+                search: ''
+            }
+        },
+        computed: {
+            filteredTracks(){
+                return this.tracks.filter((track) => {
+                    return track.title.toLowerCase().includes(this.search.toLowerCase())
+                })
+            }
+        }
    }
 </script>
    
