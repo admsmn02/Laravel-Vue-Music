@@ -17,16 +17,7 @@
             >
             {{ search }}
             <div class="track-grid">
-                <div v-for="track in filteredTracks" :key="track.uuid" class="track-card" @click="play(track)">
-                    <img :src="'/storage/' + track.image" alt="" class="track-image">
-                    <div class="track-info">
-                        <h2 class="track-title">{{ track.title }}</h2>
-                        <p class="track-artist">by {{ track.artist }}</p>
-                    </div>
-                    <div class="track-play-count">
-                        {{ track.play_count }} plays
-                    </div>
-                </div>
+                <Track v-for="track in filteredTracks" :key="track.uuid" :track="track" :active="currentTrack === track.uuid" @played="play" />
             </div>
         </template>
         
@@ -36,10 +27,12 @@
 <script>
    import MusicLayout from '@/Layouts/MusicLayout.vue'
    import { Link } from '@inertiajs/vue3'
+   import Track from '@/Components/Track/Track.vue'
    export default {
         components: {
             MusicLayout,
-            Link
+            Link,
+            Track,
         },
         props: ['tracks'],
         data() {
@@ -77,7 +70,7 @@
    }
 </script>
    
-<style scoped>
+<style>
     .track-grid {
     display: flex;
     flex-wrap: wrap;
@@ -100,6 +93,7 @@
     }
 
     .track-info {
+    width: 80%;
     padding: 1rem;
     color: #333;
     }
@@ -121,4 +115,5 @@
     font-size: 1.2rem;
     color: #666;
     }
+
 </style>
