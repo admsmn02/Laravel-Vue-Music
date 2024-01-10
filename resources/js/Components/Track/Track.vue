@@ -9,10 +9,10 @@
         <button @click="handleClick" class="z-40 play-button bg-transparent border-none p-1 m-1 cursor-pointer outline-none transform transition duration-300 ease-in-out hover:scale-110 active:scale-90 absolute top-0 right-0">
             <img width="50" height="50" src="https://jccdallas.org/wp-content/uploads/2020/06/Spotify-Play-Button.png" alt="Play">
         </button>
-        <Link :href="route('tracks.edit', {track: track })" class="ease-in-out hover:scale-110 active:scale-90 text-white font-bold ml-2 absolute top-[0.7rem] right-[4rem]">
+        <Link v-if="$page.props.isAdmin" :href="route('tracks.edit', {track: track })" class="ease-in-out hover:scale-110 active:scale-90 text-white font-bold ml-2 absolute top-[0.7rem] right-[4rem]">
             <img width= "38" height="38" src="https://freesvg.org/img/gearGreen.png" alt="Modifier">
         </Link>
-        <Link :href="route('tracks.destroy', {track: track })" method="delete" as="button" class="ease-in-out hover:scale-110 active:scale-90 text-white font-bold ml-2 absolute top-[0.6rem] right-[6.8rem]">
+        <Link v-if="$page.props.isAdmin" :href="route('tracks.destroy', {track: track })" method="delete" as="button" class="ease-in-out hover:scale-110 active:scale-90 text-white font-bold ml-2 absolute top-[0.6rem] right-[6.8rem]">
             <img width= "38" height="38" src="https://cdn-icons-png.flaticon.com/512/325/325008.png" alt="Supprimer">
         </Link>
         <div class="track-play-count">

@@ -5,7 +5,7 @@
         </template>
 
         <template #action>
-            <Link :href="route('tracks.create')" class="bg-green-500 hover:bg-green-600 text-white rounded-md px-3 py-2 text-sm font-medium">
+            <Link v-if="$page.props.isAdmin" :href="route('tracks.create')" class="bg-green-500 hover:bg-green-600 text-white rounded-md px-3 py-2 text-sm font-medium">
                 Créer une musique
             </Link>
         </template>

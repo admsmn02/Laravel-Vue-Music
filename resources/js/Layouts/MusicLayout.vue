@@ -32,9 +32,9 @@
   
               <!-- User Auth -->
               <div class="relative ml-3">
-                <Link :href="route('login')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py2 px-4 rounded mr-3">Se connecter</Link>
-                <Link :href="route('login')" method="post" as="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold  py2 px-4 rounded mr-3">Se déconnecter</Link>
-                <Link :href="route('register')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py2 px-4 rounded mr-3">Créer un compte</Link>
+                <Link v-if="!$page.props.auth.user" :href="route('login')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py2 px-4 rounded mr-3">Se connecter</Link>
+                <Link v-if="$page.props.auth.user" :href="route('logout')" method="post" as="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold  py2 px-4 rounded mr-3">Se déconnecter</Link>
+                <Link v-if="!$page.props.auth.user" :href="route('register')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py2 px-4 rounded mr-3">Créer un compte</Link>
               </div>
             </div>
           </div>
