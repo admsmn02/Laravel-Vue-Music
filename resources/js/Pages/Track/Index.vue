@@ -15,7 +15,6 @@
                 type="search"
                 v-model="search"
             >
-            {{ search }}
             <div class="track-grid">
                 <Track v-for="track in filteredTracks" :key="track.uuid" :track="track" :active="currentTrack === track.uuid" @played="play" />
             </div>
