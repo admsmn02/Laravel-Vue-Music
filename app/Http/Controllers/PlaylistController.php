@@ -19,7 +19,6 @@ class PlaylistController extends Controller
         $user = request()->user();
         $playlists = $user->playlists()->with('tracks')->get();
 
-
         return Inertia::render('Playlist/Index', [
             'playlists' => $playlists,
         ]);
@@ -66,6 +65,9 @@ class PlaylistController extends Controller
      */
     public function show(Playlist $playlist)
     {
+        return Inertia::render('Playlist/Show', [
+            'playlist' => $playlist->load('tracks'),
+        ]);
     }
 
     /**

@@ -28,8 +28,10 @@
                         <td class="text-center">{{ i + 1 }}</td>
                         <td class="text-center">{{ playlist.title }}</td>
                         <td class="text-center">{{ playlist.tracks.length }}</td>
-                        <td class="text-center">{{ playlist.created_at }}</td>
-                        <td></td>
+                        <td class="text-center">{{ $moment(playlist.created_at).format("DD-MM-YYYY à hh:mm:ss") }}</td>
+                        <td class="text-center">
+                            <Link :href="route('playlists.show', { playlist: playlist })" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Voir</Link>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -51,5 +53,10 @@
 </script>
    
 <style>
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}
 
 </style>

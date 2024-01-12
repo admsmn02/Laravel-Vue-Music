@@ -22,6 +22,11 @@ class Playlist extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     public function tracks(): BelongsToMany
     {
         return $this->belongsToMany(Track::class)->withTimestamps();
